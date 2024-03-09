@@ -29,4 +29,9 @@ public class CartItem {
         this.userId = userId;
         this.product = product;
     }
+
+    public CartItem changeCount(Integer count) {
+        this.count = count;
+        return this;
+    }
 }

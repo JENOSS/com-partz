@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface RaffleRepository extends JpaRepository<Raffle, Long> {
-    Optional<Raffle> findFirstByOrderByCreatedDatetimeDesc();
+    Optional<Raffle> findFirstByOrderByIdDesc();
 }

@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface ProductService {
     Page<ProductDto> getProducts(ProductRequest request);
+
+    ProductDto getProduct(Long productId);
     RaffleDto getRaffle();
     List<RecommendDto> getRecommends();
     List<CategoryDto> getCategories();

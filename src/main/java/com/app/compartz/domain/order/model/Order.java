@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,16 +22,23 @@ public class Order {
     private LocalDateTime createdDatetime;
     private Long userId;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     @OrderBy("id desc")
     private List<OrderDetail> details;
 
     @Builder
-    public Order(Long id, Integer amount, LocalDateTime createdDatetime, List<OrderDetail> details, Long userId) {
+    public Order(Long id, LocalDateTime createdDatetime,  Long userId) {
         this.id = id;
-        this.amount = amount;
         this.createdDatetime = createdDatetime;
-        this.details = details;
         this.userId = userId;
     }
+
+    public void addDetails(OrderDetail orderDetail) {
+        if (details == null) details = new ArrayList<>();
+        orderDetail.setOrder(this);
+
+        this.details.add(orderDetail);
+        this.amount = (this.amount != null ? this.amount : 0)  + (orderDetail.getProduct().getPrice() * orderDetail.getCount());
+    }
+
 }

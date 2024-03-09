@@ -31,4 +31,9 @@ public class OrderDetail {
         this.product = product;
         this.order = order;
     }
+
+    public OrderDetail setOrder(Order order) {
+        this.order = order;
+        return this;
+    }
 }
