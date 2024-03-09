@@ -44,3 +44,23 @@ insert into recommend(id, product_id) values(6, 10);
 -- raffle --
 
 insert into raffle(id, product_id) values(0, 11);
+
+-- order --
+
+insert into orders(id, amount, created_datetime, user_id) values(0, 24000, '2024-03-08 00:00:00', 0);
+insert into orders(id, amount, created_datetime, user_id) values(1, 33000, '2024-03-08 00:00:00', 0);
+insert into orders(id, amount, created_datetime, user_id) values(2, 64000, '2024-03-08 00:00:00', 1);
+
+-- order detail --
+
+insert into order_detail(id, count, product_id, order_id) values(0, 1, 0, 0);
+insert into order_detail(id, count, product_id, order_id) values(1, 1, 1, 0);
+insert into order_detail(id, count, product_id, order_id) values(2, 1, 3, 1);
+insert into order_detail(id, count, product_id, order_id) values(3, 1, 4, 1);
+insert into order_detail(id, count, product_id, order_id) values(4, 1, 9, 2);
+insert into order_detail(id, count, product_id, order_id) values(5, 1, 10, 2);
+
+-- cart item --
+
+insert into cart_item(id, count, user_id, product_id) values(0, 1, 0, 0);
+

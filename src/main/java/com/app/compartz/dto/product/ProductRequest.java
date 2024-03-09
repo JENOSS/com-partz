@@ -21,6 +21,6 @@ public class ProductRequest {
         this.categoryId = categoryId;
         this.sortType = Objects.requireNonNullElse(sortType, SortType.ID_DESC.name());
         this.page = Objects.requireNonNullElse(page, 0);
-        this.size = Objects.requireNonNullElse(size, 30);
+        this.size = Objects.requireNonNullElse(size, 10);
     }
 }

@@ -19,15 +19,18 @@ public class Order {
     private Long id;
     private Integer amount;
     private LocalDateTime createdDatetime;
+    private Long userId;
 
     @OneToMany(mappedBy = "order")
+    @OrderBy("id desc")
     private List<OrderDetail> details;
 
     @Builder
-    public Order(Long id, Integer amount, LocalDateTime createdDatetime, List<OrderDetail> details) {
+    public Order(Long id, Integer amount, LocalDateTime createdDatetime, List<OrderDetail> details, Long userId) {
         this.id = id;
         this.amount = amount;
         this.createdDatetime = createdDatetime;
         this.details = details;
+        this.userId = userId;
     }
 }

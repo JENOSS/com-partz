@@ -16,15 +16,17 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Integer count;
+    private Long userId;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
 
     @Builder
-    public CartItem(Long id, Integer count, Product product) {
+    public CartItem(Long id, Long userId, Integer count, Product product) {
         this.id = id;
         this.count = count;
+        this.userId = userId;
         this.product = product;
     }
 }
