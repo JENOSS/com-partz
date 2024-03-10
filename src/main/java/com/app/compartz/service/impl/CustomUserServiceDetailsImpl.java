@@ -1,9 +1,11 @@
 package com.app.compartz.service.impl;
 
+import com.app.compartz.component.exception.CustomException;
 import com.app.compartz.domain.user.model.User;
 import com.app.compartz.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,14 +21,13 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class CustomUserServiceDetailsImpl implements UserDetailsService {
-
     private final UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
         return userRepository.findByMail(mail)
                 .map(this::createUserDetails)
-                .orElseThrow(() -> new UsernameNotFoundException(mail));
+                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "해당되는 유저가 없습니다. mail : " + mail));
     }
 
     private UserDetails createUserDetails(User user) {

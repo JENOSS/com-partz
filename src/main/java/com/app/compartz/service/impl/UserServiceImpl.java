@@ -1,5 +1,6 @@
 package com.app.compartz.service.impl;
 
+import com.app.compartz.component.exception.CustomException;
 import com.app.compartz.component.security.TokenProvider;
 import com.app.compartz.domain.user.converter.UserConverter;
 import com.app.compartz.domain.user.converter.UserDtoConverter;
@@ -9,6 +10,7 @@ import com.app.compartz.dto.user.UserDto;
 import com.app.compartz.dto.user.UserSaveRequest;
 import com.app.compartz.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -36,22 +39,28 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id)
                 .map(UserDtoConverter::new)
                 .map(UserDtoConverter::convert)
-                .orElseThrow(() -> new UsernameNotFoundException("no such user"));
+                .orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, "해당 유저는 존재하지 않습니다. ID : " + id));
     }
 
     @Override
     @Transactional
     public UserDto login(LoginRequest request) {
+        if (!userRepository.existsByMail(request.getMail())) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "해당되는 유저가 없습니다. mail : " + request.getMail());
+        }
         var accessToken = this.generateToken(request.getMail(), request.getPassword());
 
         return userRepository.findByMail(request.getMail())
                 .map(user -> new UserDtoConverter(user).convertForLogin(accessToken))
-                .orElseThrow(() -> new UsernameNotFoundException("no such user"));
+                .orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, "해당되는 유저가 없습니다. mail : " + request.getMail()));
     }
 
     @Override
     @Transactional
     public UserDto signup(UserSaveRequest request) {
+        if (userRepository.existsByMail(request.getMail())) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "이미 존재하는 유저입니다. mail : " + request.getMail());
+        }
         var user = new UserConverter(request)
                 .convert()
                 .changePassword(passwordEncoder.encode(request.getPassword()));
@@ -63,6 +72,10 @@ public class UserServiceImpl implements UserService {
     }
 
     private String generateToken(String mail, String password) {
+        if (Objects.isNull(mail) || Objects.isNull(password)) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "메일 혹은 패스워드를 입력해주세요");
+        }
+
         // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(mail, password);

@@ -1,5 +1,6 @@
 package com.app.compartz.service.impl;
 
+import com.app.compartz.component.exception.CustomException;
 import com.app.compartz.domain.product.converter.CategoryDtoConverter;
 import com.app.compartz.domain.product.converter.ProductDtoConverter;
 import com.app.compartz.domain.product.converter.RaffleDtoConverter;
@@ -12,6 +13,7 @@ import com.app.compartz.dto.product.*;
 import com.app.compartz.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findById(productId)
                 .map(ProductDtoConverter::new)
                 .map(ProductDtoConverter::convert)
-                .orElseThrow(() -> new NoSuchElementException("no items"));
+                .orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, "해당되는 상품이 없습니다. ID : " + productId));
     }
 
     @Override
@@ -55,7 +57,7 @@ public class ProductServiceImpl implements ProductService {
         return raffleRepository.findFirstByOrderByIdDesc()
                 .map(RaffleDtoConverter::new)
                 .map(RaffleDtoConverter::convert)
-                .orElseThrow(() -> new NoSuchElementException("no items"));
+                .orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, "래플 상품이 없습니다."));
     }
 
     @Override

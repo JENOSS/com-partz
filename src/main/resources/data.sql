@@ -65,8 +65,8 @@ insert into order_detail( count, product_id, order_id) values( 1, 11, 3);
 insert into cart_item( count, user_id, product_id) values( 1, 1, 1);
 
 -- user --
+-- password 는 1234 이다. --
+insert into users( mail, name, nick_name, phone, password) values( 'nari1539@naver.com', '박진우', 'zeno', '010-111-1111', '$2a$10$xfdvnV3UPUBmp3K2m3Pyg.z5BGVCedvGB6UqHOMHvlF1sw06KauM6')
 
-insert into users( mail, name, nick_name, phone, password) values( 'nari1539@naver.com', '박진우', 'zeno', '010-111-1111', '$2a$10$LDi0CugZIp1m4QVuWCuAK./rDFA3aeBCVraqvLtWOCV5Jq3mQbYxu')
-
--- Temp Access Token : eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTcxMDY3OTIzMn0.Vsm49JC2EYCyp3FjclbNBWnv6sL2vOOVk51wWCQ1ib0
--- API 호출시 헤더 => Authorization : Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTcxMDY3OTIzMn0.Vsm49JC2EYCyp3FjclbNBWnv6sL2vOOVk51wWCQ1ib0
+-- Temp Access Token : eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTcxMDY4MjM0OX0.OiKnmbL2YcgXHqWtfCOPxmAqo3JGRm6x6cTYrbFe-MA
+-- API 호출시 헤더 => Authorization : Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTcxMDY4MjM0OX0.OiKnmbL2YcgXHqWtfCOPxmAqo3JGRm6x6cTYrbFe-MA
