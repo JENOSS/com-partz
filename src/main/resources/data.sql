@@ -98,7 +98,6 @@ insert into raffle( product_id) values( 12);
 
 insert into orders( amount, created_datetime, user_id) values( 39000, '2024-03-08 00:00:00', 1);
 insert into orders( amount, created_datetime, user_id) values( 33000, '2024-03-08 00:00:00', 1);
-insert into orders( amount, created_datetime, user_id) values( 59500, '2024-03-08 00:00:00', 2);
 
 -- order detail --
 
@@ -106,8 +105,6 @@ insert into order_detail( count, product_id, order_id) values( 1, 1, 1);
 insert into order_detail( count, product_id, order_id) values( 1, 2, 1);
 insert into order_detail( count, product_id, order_id) values( 1, 4, 2);
 insert into order_detail( count, product_id, order_id) values( 1, 5, 2);
-insert into order_detail( count, product_id, order_id) values( 1, 10, 3);
-insert into order_detail( count, product_id, order_id) values( 1, 11, 3);
 
 -- cart item --
 

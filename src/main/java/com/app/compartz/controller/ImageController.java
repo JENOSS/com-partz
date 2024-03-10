@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ImageController {
     private final ImageService imageService;
 
+    /* 사용안함
     @GetMapping("/name")
     private ResponseEntity<Resource> getImage(@PathVariable("name") String name) {
         var image = imageService.getImage(name);
@@ -25,4 +26,5 @@ public class ImageController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + image.getFilename() + "\"")
                 .body(image);
     }
+     */
 }
