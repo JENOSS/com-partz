@@ -10,6 +10,7 @@ import com.app.compartz.dto.cart.CartItemUpdateRequest;
 import com.app.compartz.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -21,6 +22,7 @@ public class CartServiceImpl implements CartService {
     private final ProductRepository productRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public List<CartItemDto> getCartItems(Long userId) {
         return cartItemRepository.findAllByUserIdOrderByIdDesc(userId).stream()
                 .map(CartItemDtoConverter::new)
@@ -29,6 +31,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    @Transactional
     public CartItemDto save(CartItemSaveRequest request) {
         var product = productRepository.findById((request.getProductId()))
                 .orElseThrow(() -> new NoSuchElementException("no items"));
@@ -41,6 +44,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    @Transactional
     public CartItemDto update(CartItemUpdateRequest request) {
         var cartItem = cartItemRepository.findById(request.getCartItemId())
                 .orElseThrow(() -> new NoSuchElementException("no items"));
@@ -49,6 +53,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    @Transactional
     public void delete(Long cartItemId) {
         cartItemRepository.deleteById(cartItemId);
     }

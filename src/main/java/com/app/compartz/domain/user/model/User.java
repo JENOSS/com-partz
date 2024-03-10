@@ -21,12 +21,16 @@ public class User {
     private String password;
 
     @Builder
-    public User(Long id, String mail, String name, String nickName, String phone, String password) {
+    public User(Long id, String mail, String name, String nickName, String phone) {
         this.id = id;
         this.mail = mail;
         this.name = name;
         this.nickName = nickName;
         this.phone = phone;
+    }
+
+    public User changePassword(String password) {
         this.password = password;
+        return this;
     }
 }

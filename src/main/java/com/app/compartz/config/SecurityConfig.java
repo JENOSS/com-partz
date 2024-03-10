@@ -1,5 +1,8 @@
 package com.app.compartz.config;
 
+import com.app.compartz.component.security.JwtAccessDeniedHandler;
+import com.app.compartz.component.security.JwtAuthenticationEntryPoint;
+import com.app.compartz.component.security.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,9 +17,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-//    private final TokenProvider tokenProvider;
-//    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-//    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final TokenProvider tokenProvider;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -27,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) {
         web.ignoring()
-                .antMatchers("/h2-console/**", "/favicon.ico");
+                .antMatchers("/h2-console/**", "/favicon.ico", "/resources/**");
     }
 
     @Override
@@ -35,7 +38,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         /* TODO
          *  웹 임시 작업 위해 임시적으로 추가 (인증 과정 무효화)
          *  클라이언트 구현 시 제거 예정
-         */
         http
                 .csrf().disable()
                 .authorizeRequests().antMatchers("/**").permitAll()
@@ -43,13 +45,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/main");
+         */
 
         /* TODO
          *  웹 임시 작업 위해 주석 처리 (인증 과정)
          *  클라이트 구현 시 주석 제거 예정
+         */
         // CSRF 설정 Disable
         http.csrf().disable()
-                // exception handling 할 때 우리가 만든 클래스를 추가
+                // exception handling 할 때 커스텀 클래스를 추가
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .accessDeniedHandler(jwtAccessDeniedHandler)
@@ -69,13 +73,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 로그인, 회원가입 API 는 토큰이 없는 상태에서 요청이 들어오기 때문에 permitAll 설정
                 .and()
                 .authorizeRequests()
-                .antMatchers("/auth**").permitAll()
+                .antMatchers("/auth/**").permitAll()
                 .anyRequest().authenticated()   // 나머지 API 는 전부 인증 필요
 
                 // JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider));
-         */
 
     }
 }
