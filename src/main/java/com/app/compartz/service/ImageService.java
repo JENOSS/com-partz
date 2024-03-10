@@ -4,5 +4,5 @@ import org.springframework.core.io.Resource;
 
 public interface ImageService {
 
-    Resource getImage(Long id);
+    Resource getImage(String name);
 }

@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class ImageController {
     private final ImageService imageService;
 
-    @GetMapping("/{id}")
-    private ResponseEntity<Resource> getImage(@PathVariable("id") Long id) {
-        var image = imageService.getImage(id);
+    @GetMapping("/name")
+    private ResponseEntity<Resource> getImage(@PathVariable("name") String name) {
+        var image = imageService.getImage(name);
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_JPEG) // 이미지 타입에 맞게 변경
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + image.getFilename() + "\"")

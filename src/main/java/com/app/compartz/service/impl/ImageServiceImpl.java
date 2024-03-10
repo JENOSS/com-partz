@@ -16,9 +16,9 @@ import java.nio.file.Paths;
 public class ImageServiceImpl implements ImageService {
     private static final String IMAGE_DIRECTORY = "src/main/resources/static/images";
 
-    public Resource getImage(Long id) {
+    public Resource getImage(String name) {
         try {
-            var image = id.toString() + ".jpg";
+            var image = "/" + name;
             var imagePath = Paths.get(IMAGE_DIRECTORY).resolve(image);
             var resource = new UrlResource(imagePath.toUri());
 
