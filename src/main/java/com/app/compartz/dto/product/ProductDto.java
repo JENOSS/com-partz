@@ -8,6 +8,7 @@ public record ProductDto(Long id,
                          String name,
                          String image,
                          Integer price,
+                         String description,
                          String descriptionImage,
                          LocalDateTime createdDatetime){
 

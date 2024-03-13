@@ -14,6 +14,7 @@ public class ProductDtoConverter {
                 .name(origin.getName())
                 .price(origin.getPrice())
                 .image(origin.getImage())
+                .description(origin.getDescription())
                 .descriptionImage(origin.getDescriptionImage())
                 .createdDatetime(origin.getCreatedDatetime())
                 .build();

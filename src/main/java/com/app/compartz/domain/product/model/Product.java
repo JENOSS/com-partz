@@ -20,16 +20,20 @@ public class Product {
     private String image;
     private Integer price;
     private String descriptionImage;
+
+    @Column(columnDefinition="TEXT")
+    private String description;
     private LocalDateTime createdDatetime;
     private Long categoryId;
 
     @Builder
-    public Product(Long id, String name, String image, Integer price, String descriptionImage, Long categoryId, LocalDateTime createdDatetime) {
+    public Product(Long id, String name, String image, Integer price, String descriptionImage, String description, Long categoryId, LocalDateTime createdDatetime) {
         this.id = id;
         this.name = name;
         this.image = image;
         this.price = price;
         this.descriptionImage = descriptionImage;
+        this.description = description;
         this.categoryId = categoryId;
         this.createdDatetime = createdDatetime;
     }
